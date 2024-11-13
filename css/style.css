@@ -6,13 +6,16 @@
     height: 100vh;
 }
 
-.info {
+#info {
     display: flex;
     justify-content: center;
     padding-top: 2rem;
+    padding-right: 10rem;
 
     .input-sign {
         border: none;
         border-radius: 0.5rem;
+        padding: 0.5rem;
+        width: 30rem;
     }
 }

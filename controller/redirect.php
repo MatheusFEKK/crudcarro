@@ -9,10 +9,20 @@
 
         function listAll(){
             global $cars;
-            $database = new database;
+            $database = new database();
             $db = $database->connect();
             $car = new carro($db);
             $cars = $car->listAllCars();
+        }
+
+        function searchCar(){
+            global $searchingCar;
+            $database = new database();
+            $db = $database->connect();
+            $car = new carro($db);
+            if (isset($_GET['editar'])){
+                $searchingCar = $car->searchCar($_GET['editar']);
+            }
         }
 
         if (isset($_POST['cadastrar_carro'])){

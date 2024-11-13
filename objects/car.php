@@ -22,11 +22,12 @@
         }
 
         public function registerCar(){
-            $sql = "INSERT INTO carros (nome_carro, ano_carro, motor_carro) VALUES (:nome, :ano, :motor)";
+            $sql = "INSERT INTO carros (nome_carro, descricao_carro, ano_carro, motor_carro) VALUES (:nome, :descricao, :ano, :motor)";
             $stat = $this->db->prepare($sql);
             $stat->bindParam(':nome', $this->nome_carro);
             $stat->bindParam(':ano', $this->ano_carro);
             $stat->bindParam(':motor', $this->motor_carro);
+            $stat->bindParam(':descricao', $this->descricao_carro);
             if ($stat->execute()){
                 return true;
             }else {
@@ -35,10 +36,10 @@
         }
 
 
-        public function searchCar(){
-            $sql = "SELECT * FROM carros where nome_carro = :nome_carro";
+        public function searchCar($nome){
+            $sql = "SELECT * FROM carros WHERE id_carro = :id_carro";
             $stat = $this->db->prepare($sql);
-            $stat->bindParam(':nome_carro', $this->nome_carro);
+            $stat->bindParam(':id_carro', $nome);
             $stat->execute();
 
             return $stat->fetchAll(PDO::FETCH_OBJ);

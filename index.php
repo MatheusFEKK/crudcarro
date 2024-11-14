@@ -4,6 +4,8 @@
     listAll();
     
     searchCar();
+    searchUser();
+    searchCheckBox();
 ?>
 
 <!DOCTYPE html>
@@ -15,26 +17,42 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-    <script>
-        function pop_up(){
-            let body = document.body;
-            let window = document.getElementById("holder");
-            let div = document.getElementById("info");
-            let pop_up = `<div class='editbox'>
-            <?php
-                foreach ($searchingCar as $rows){
-                    echo            '<input type="text" value="'.$_GET['editar'].'" name="id_carro_editar">
-                                    <input type="text" value="'.$rows->nome_carro.'" name="nome_carro_editar">
-                                    <input type="text" value="'.$rows->descricao_carro.'" name="descricao_carro_editar">
-                                    <input type="text" value="'.$rows->ano_carro.'" name="ano_carro_editar">';
+<body style="font-family: Arial, Helvetica, sans-serif;">
+    <div class="searching" style="padding-top: 2rem;">
+        <h5>PESQUISA</h5>
+        <form action="index.php" method="post">
+            <input class="input-sign shadow-sm" type="text" name="searching" placeholder="PESQUISAR"><br>
+                <h6>Pesquisar por Motor: </h6><input type="checkbox" name="pesquisamotor[]" value="V6">
+                <label for="">V6</label>
+                <input type="checkbox" name="pesquisamotor[]" value="V8">
+                <label for="">V8</label>
+                <input type="checkbox" name="pesquisamotor[]" value="V12">
+                <label for="">V12</label><button class="btn btn-info btn-sm" style="margin:1rem; border-radius:1rem;" name="filtrar">Filtrar</button>
+            <button class="btn btn-primary btn-sm" name="searchBtn" style="float:right; margin-top:1rem;">PESQUISA</button>
+        </form>
+    </div>
+    <div class="resultSearch">
+        <?php 
+        print_r($_POST['pesquisamotor']);
+        echo implode(", ", $_POST['pesquisamotor']);
+            if (isset($_POST['searchBtn'])){
+                foreach ($searchUser as $rows){
+                    echo '<p class="text-center">Nome do Carro: '.$rows->nome_carro.'
+                            <br>Descrição do Carro: '.$rows->descricao_carro.'
+                            <br>Motor do Carro: '.$rows->motor_carro.'</p>';
                 }
-                ?>
-                </div>`;
-                // Tentando fazer POP UP
-        
             }
-    </script>
+
+            if (isset($_POST['filtrar']) && $_POST['pesquisamotor']){
+                    foreach($searchCheckBox as $rowss){
+                        print_r($searchCheckBox);
+                        echo '<p class="text-center">Nome do Carro:'.$rowss->nome_carro.'
+                        <br>Descrição do Carro: '.$rowss->descricao_carro.'
+                        <br>Motor do Carro:'.$rowss->motor_carro.'';
+                    }
+            }
+        ?>
+    </div>
     <div class="container">
         <div id="info">
             <div id="holder shadow" style="border-radius: 1rem; padding:5rem;">
@@ -51,15 +69,15 @@
         <div class="box">
                 <?php 
                     foreach ($cars as $rows){
-                        echo '<div class="card w-75">
+                        echo '<div class="card h-auto w-25">
                                 <div class="card-body">
                                     <h5 class="card-title">'.$rows->nome_carro.'</h5>
                                         <p class="card-text">'.$rows->descricao_carro.'</p>
                                         <p class="card-text">Carro fabricado no ano: '.$rows->ano_carro.'</p>
                                         <p class="card-text">Motor equipado no '.$rows->nome_carro.': '. $rows->motor_carro.'</p>
                                         <a class="btn btn-danger" href="./controller/redirect.php?delete='.$rows->id_carro.'">DELETAR</a>
-                                        <a href="./index.php?editar='.$rows->id_carro.'">
-                                            <button class="btn btn-primary" onclick="pop_up()">EDITAR</button>
+                                        <a href="./edit.php?editar='.$rows->id_carro.'">
+                                            <button class="btn btn-primary">EDITAR</button>
                                         </a>
                                 </div>
                             </div>';

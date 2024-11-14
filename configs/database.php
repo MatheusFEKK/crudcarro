@@ -5,7 +5,7 @@
         private $host = 'localhost:3306';
         private $database = 'crudcarro';
         private $user = 'root';
-        private $password = '10012019_Maria';
+        private $password = '';
         public $conn;
 
         public function connect(){

@@ -2,7 +2,6 @@
     include_once'./controller/redirect.php';
 
     listAll();
-    
     searchCar();
     searchUser();
     searchCheckBox();
@@ -32,26 +31,49 @@
         </form>
     </div>
     <div class="resultSearch">
+        <div class="box">
         <?php 
-        print_r($_POST['pesquisamotor']);
-        echo implode(", ", $_POST['pesquisamotor']);
+        /*print_r($_POST['pesquisamotor'])*/;
+//        echo implode(", ", $_POST['pesquisamotor']);
             if (isset($_POST['searchBtn'])){
-                foreach ($searchUser as $rows){
-                    echo '<p class="text-center">Nome do Carro: '.$rows->nome_carro.'
-                            <br>Descrição do Carro: '.$rows->descricao_carro.'
-                            <br>Motor do Carro: '.$rows->motor_carro.'</p>';
+                foreach ($searchUser as $searchNameCar){
+                    echo '
+                                <div class="card h-auto w-25">
+                                    <div class="card-body">
+                                        <h5 class="card-title">'.$searchNameCar->nome_carro.'</h5>
+                                            <p class="card-text">'.$searchNameCar->descricao_carro.'</p>
+                                            <p class="card-text">Carro fabricado no ano: '.$searchNameCar->ano_carro.'</p>
+                                            <p class="card-text">Motor equipado no '.$searchNameCar->nome_carro.': '. $searchNameCar->motor_carro.'</p>
+                                            <a class="btn btn-danger" href="./controller/redirect.php?delete='.$searchNameCar->id_carro.'">DELETAR</a>
+                                            <a href="./edit.php?editar='.$searchNameCar->id_carro.'">
+                                                <button class="btn btn-primary">EDITAR</button>
+                                            </a>
+                                    </div>
+                                </div>
+                            </div>';
                 }
             }
-
-            if (isset($_POST['filtrar']) && $_POST['pesquisamotor']){
-                    foreach($searchCheckBox as $rowss){
-                        print_r($searchCheckBox);
-                        echo '<p class="text-center">Nome do Carro:'.$rowss->nome_carro.'
-                        <br>Descrição do Carro: '.$rowss->descricao_carro.'
-                        <br>Motor do Carro:'.$rowss->motor_carro.'';
+            if (isset($_POST['filtrar']) && isset($_POST['pesquisamotor'])){
+                    foreach($searchCheckBox as $searchViaCheckBox){
+//                        print_r($searchCheckBox);
+                        echo '
+                                <div class="card h-auto w-25">
+                                    <div class="card-body">
+                                        <h5 class="card-title">'.$searchViaCheckBox->nome_carro.'</h5>
+                                            <p class="card-text">'.$searchViaCheckBox->descricao_carro.'</p>
+                                            <p class="card-text">Carro fabricado no ano: '.$searchViaCheckBox->ano_carro.'</p>
+                                            <p class="card-text">Motor equipado no '.$searchViaCheckBox->nome_carro.': '. $searchViaCheckBox->motor_carro.'</p>
+                                            <a class="btn btn-danger" href="./controller/redirect.php?delete='.$searchViaCheckBox->id_carro.'">DELETAR</a>
+                                            <a href="./edit.php?editar='.$searchViaCheckBox->id_carro.'">
+                                                <button class="btn btn-primary">EDITAR</button>
+                                            </a>
+                                    </div>
+                                </div>
+                            ';
                     }
             }
         ?>
+    </div>
     </div>
     <div class="container">
         <div id="info">
@@ -66,6 +88,7 @@
                 </form>
             </div>
         </div>
+    </div>
         <div class="box">
                 <?php 
                     foreach ($cars as $rows){
@@ -84,6 +107,5 @@
                     }
                 ?>
         </div>
-    </div>
 </body>
 </html>

@@ -46,6 +46,15 @@
             return $stat->fetchAll(PDO::FETCH_OBJ);
     }
 
+    public function searchCarById($id){
+        $sql = "SELECT * FROM carros WHERE id_carro = :id_carro";
+        $stat = $this->db->prepare($sql);
+        $stat->bindParam(':id_carro', $id);
+        $stat->execute();
+
+        return $stat->fetchAll(PDO::FETCH_OBJ);
+    }
+
     public function deleteCar(){
         $sql = "DELETE FROM carros WHERE id_carro = :id_carro";
         $stat = $this->db->prepare($sql);
@@ -73,7 +82,8 @@
     }
 
     public function filterCar($motor){
-        $sql = "SELECT * FROM carros WHERE motor_carro in (:motor_carro)";
+        $motor = "%$motor%";
+        $sql = "SELECT * FROM carros WHERE motor_carro like :motor_carro";
         $stat = $this->db->prepare($sql);
         $stat->bindParam(':motor_carro', $motor);
         $stat->execute();

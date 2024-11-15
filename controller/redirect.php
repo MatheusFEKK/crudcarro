@@ -21,7 +21,7 @@
             $db = $database->connect();
             $car = new carro($db);
             if (isset($_GET['editar'])){
-                $searchingCar = $car->searchCar($_GET['editar']);
+                $searchingCar = $car->searchCarById($_GET['editar']);
             }
         }
 

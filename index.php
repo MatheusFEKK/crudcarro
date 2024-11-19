@@ -1,10 +1,11 @@
 <?php
     include_once'./controller/redirect.php';
-
+    
     listAll();
     searchCar();
     searchUser();
     searchCheckBox();
+    searchWithButton();
 ?>
 
 <!DOCTYPE html>
@@ -21,38 +22,51 @@
         <h5>PESQUISA</h5>
         <form action="index.php" method="post">
             <input class="input-sign shadow-sm" type="text" name="searching" placeholder="PESQUISAR"><br>
-                <h6>Pesquisar por Motor: </h6><input type="checkbox" name="pesquisamotor[]" value="V6">
+                <h6>Pesquisar por Motor: <? ?></h6><input type="checkbox" name="pesquisamotor[]" value="V6">
                 <label for="">V6</label>
                 <input type="checkbox" name="pesquisamotor[]" value="V8">
                 <label for="">V8</label>
                 <input type="checkbox" name="pesquisamotor[]" value="V12">
-                <label for="">V12</label><button class="btn btn-info btn-sm" style="margin:1rem; border-radius:1rem;" name="filtrar">Filtrar</button>
+                <label for="">V12</label><button class="btn btn-info btn-sm" style="margin:1rem; border-radius:1rem;" name="filtrar">Filtrar</button><br>
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group me-2 gap-2" role="group" aria-label="First group">
+                        <button type="submit" class="btn btn-info btn-sm rounded-pill ps-3 pe-3" name="engines[]" value="V6">V6</button>
+                        <button type="submit" class="btn btn-info btn-sm rounded-pill ps-3 pe-3" name="engines[]" value="V8">V8</button>
+                        <button type="submit" class="btn btn-info btn-sm rounded-pill ps-3 pe-3" name="engines[]" value="V12">V12</button>
+                    </div>
+                </div>
             <button class="btn btn-primary btn-sm" name="searchBtn" style="float:right; margin-top:1rem;">PESQUISA</button>
         </form>
     </div>
     <div class="resultSearch">
         <div class="box">
+            <div class="card h-auto w-25">
+                <div class="card-body">
+                    <h5 class="card-title"><?=$searchButton[0]->nome_carro?></h5>
+                        <p class="card-text"><?=$searchButton[0]->descricao_carro?></p>
+                        <p class="card-text">Carro fabricado no ano: <?=$searchButton[0]->ano_carro  ?> </p>
+                        <p class="card-text">Motor equipado no <?=$searchButton[0]->nome_carro  ?>: <?=$searchButton[0]->motor_carro ?></p>
+                        <a class="btn btn-danger" href="./controller/redirect.php?delete='.$searchButton[0]->?.'">DELETAR</a>
+                        <a href="./edit.php?editar=<?=$searchButton[0]->id_carro?>" ?>
+                            <button class="btn btn-primary">EDITAR</button>
+                        </a>
+                        </div>
+            </div>
+            
+            <div class="card h-auto w-25">
+                <div class="card-body">
+                    <h5 class="card-title"><?=$searchUser[0]->nome_carro?></h5>
+                        <p class="card-text"><?=$searchUser[0]->descricao_carro?></p>
+                        <p class="card-text">Carro fabricado no ano: <?=$searchUser[0]->ano_carro  ?> </p>
+                        <p class="card-text">Motor equipado no <?=$searchUser[0]->nome_carro  ?>: <?=$searchUser[0]->motor_carro ?></p>
+                        <a class="btn btn-danger" href="./controller/redirect.php?delete=<?=$searchUser[0]->id_carro?>">DELETAR</a>
+                        <a href="./edit.php?editar=<?=$searchUser[0]->id_carro?>" ?>
+                            <button class="btn btn-primary">EDITAR</button>
+                        </a>
+                        </div>
+            </div>
+            
         <?php 
-        /*print_r($_POST['pesquisamotor'])*/;
-//        echo implode(", ", $_POST['pesquisamotor']);
-            if (isset($_POST['searchBtn'])){
-                foreach ($searchUser as $searchNameCar){
-                    echo '
-                                <div class="card h-auto w-25">
-                                    <div class="card-body">
-                                        <h5 class="card-title">'.$searchNameCar->nome_carro.'</h5>
-                                            <p class="card-text">'.$searchNameCar->descricao_carro.'</p>
-                                            <p class="card-text">Carro fabricado no ano: '.$searchNameCar->ano_carro.'</p>
-                                            <p class="card-text">Motor equipado no '.$searchNameCar->nome_carro.': '. $searchNameCar->motor_carro.'</p>
-                                            <a class="btn btn-danger" href="./controller/redirect.php?delete='.$searchNameCar->id_carro.'">DELETAR</a>
-                                            <a href="./edit.php?editar='.$searchNameCar->id_carro.'">
-                                                <button class="btn btn-primary">EDITAR</button>
-                                            </a>
-                                    </div>
-                                </div>
-                            </div>';
-                }
-            }
             if (isset($_POST['filtrar']) && isset($_POST['pesquisamotor'])){
                     foreach($searchCheckBox as $searchViaCheckBox){
 //                        print_r($searchCheckBox);
@@ -73,7 +87,7 @@
                     }
             }
         ?>
-    </div>
+         </div>
     </div>
     <div class="container">
         <div id="info">

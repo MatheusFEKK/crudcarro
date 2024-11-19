@@ -1,12 +1,12 @@
 <?php 
         include_once'/xampp/htdocs/crudcarro/configs/database.php';
         include_once'/xampp/htdocs/crudcarro/objects/car.php';
-
+        
         $database = new database;
         $db = $database->connect();
         $car = new carro($db);
-                                  
-
+        
+        
         function listAll(){
             global $cars;
             $database = new database();
@@ -14,7 +14,7 @@
             $car = new carro($db);
             $cars = $car->listAllCars();
         }
-
+        
         function searchCar(){
             global $searchingCar;
             $database = new database();
@@ -24,7 +24,7 @@
                 $searchingCar = $car->searchCarById($_GET['editar']);
             }
         }
-
+        
         function searchUser(){
             global $searchUser;
             $database = new database();
@@ -34,7 +34,7 @@
                 $searchUser = $car->searchCar($_POST['searching']);
             }
         }
-
+        
         function searchCheckBox(){
             global $searchCheckBox;
             $database = new database();
@@ -45,7 +45,19 @@
                 $searchCheckBox = $car->filterCar($filtro);
             }
         }
-
+        
+        function searchWithButton(){
+            global $searchButton;   
+            $database = new database();
+            $db = $database->connect();
+            $car = new carro($db);
+            if (isset($_POST['engines'])){
+                $engines = implode(", ", $_POST['engines']);
+                $searchButton = $car->filterCar($engines);
+                
+            }
+        }
+        
         if (isset($_POST['cadastrar_carro'])){
             $car->nome_carro = $_POST['nome_carro'];
             $car->descricao_carro = $_POST['descricao_carro'];
@@ -55,14 +67,14 @@
                 header('Location: ../index.php');
             }
         }
-
+        
         if (isset($_GET['delete'])){
             $car->id_carro = $_GET['delete'];
-                if ($car->deleteCar()){
-                    header('Location: ../index.php');
-                }
+            if ($car->deleteCar()){
+                header('Location: ../index.php');
+            }
         }
-
+        
         if (isset($_POST['editar'])){
             $car->id_carro = $_POST['id_carro_editar'];
             $car->nome_carro = $_POST['nome_carro_editar'];

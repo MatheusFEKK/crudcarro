@@ -14,16 +14,16 @@
 </head>
 <body>
 <?php
-                foreach ($searchingCar as $rows){
-                    echo            '<div class="editbox">
+                if ($searchingCar){
+                             echo '<div class="editbox">
                                         <div class="holder">
-                                        <h4 class="text-center">EDITAR <br>('.$rows->nome_carro.')</h4>
+                                        <h4 class="text-center">EDITAR <br>('.$searchingCar[0]->nome_carro.')</h4>
                                             <form action="index.php" method="post">
                                                 <input class="input-edit shadow-sm" type="hidden" value="'.$_GET['editar'].'" name="id_carro_editar"><br>
-                                                <input class="input-edit shadow-sm" type="text" value="'.$rows->nome_carro.'" name="nome_carro_editar"><br>
-                                                <input class="input-edit shadow-sm" type="text" value="'.$rows->descricao_carro.'" name="descricao_carro_editar"><br>
-                                                <input class="input-edit shadow-sm" type="text" value="'.$rows->motor_carro.'" name="motor_carro_editar"><br>
-                                                <input class="input-edit shadow-sm" type="text" value="'.$rows->ano_carro.'" name="ano_carro_editar">
+                                                <input class="input-edit shadow-sm" type="text" value="'.$searchingCar[0]->nome_carro.'" name="nome_carro_editar"><br>
+                                                <input class="input-edit shadow-sm" type="text" value="'.$searchingCar[0]->descricao_carro.'" name="descricao_carro_editar"><br>
+                                                <input class="input-edit shadow-sm" type="text" value="'.$searchingCar[0]->motor_carro.'" name="motor_carro_editar"><br>
+                                                <input class="input-edit shadow-sm" type="text" value="'.$searchingCar[0]->ano_carro.'" name="ano_carro_editar">
                                                 <br>
                                                 <button class="btn btn-primary" name="editar">Editar</button>
                                             </form>
